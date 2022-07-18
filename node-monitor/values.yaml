@@ -5,8 +5,6 @@
 image:
   repository: "quay.io/support-tools/monitor-tools:latest"
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
 imagePullSecrets: []
 
@@ -14,15 +12,18 @@ serviceAccount:
   create: true
   name: "node-metrics-sa"
 
-nodeSelector: 
-  collect-node-metrics: ""  
-
 tolerations: 
-- key: node-role.kubernetes.io/master
-  effect: NoSchedule
+- operator: Exists
 
 namespace:
   name: "node-metrics"
-  
-affinity: {}   
-      
+
+monitordaemonset:
+  name: monitordaemonset
+  nodeSelector:
+    collect-monitor-sh: ""
+
+metricsdaemonset:
+  name: metricsdaemonset
+  nodeSelector:
+    collect-node-metrics: ""  
