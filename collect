@@ -29,6 +29,7 @@ collect_metrics() {
     echo "Collecting metrics for ${node_name}"
     mkdir -p "$output_dir"
     oc cp -n $NAMESPACE "${pod}:metrics/" "${output_dir}"
+    oc exec -n $NAMESPACE "${pod}" sh -c "rm -r metrics/*"
   done
 }
 

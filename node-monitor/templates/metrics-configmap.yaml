@@ -5,7 +5,7 @@ metadata:
   namespace:   {{ .Values.namespace.name }}
 data:
   {{- $files := .Files }}
-  {{- range tuple "scripts/monitor.sh" "scripts/collect-metrics.sh" }}
+  {{- range tuple "scripts/collect-monitor.sh" "scripts/collect-metrics.sh" }}
   {{ $filePath := split "/" . }}
   {{ $filePath._1 }}: |-
         {{ $files.Get . | nindent 8 }}
